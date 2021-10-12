@@ -1,6 +1,8 @@
+from plotly import offline
+from plotly.graph_objs import Scattergeo, Layout
 import json
 
-infile = open('eq_data_1_day_m1.json', 'r')
+infile = open('eq_data_30_day_m1.json', 'r')
 outfile = open('readable_eq_data.json', 'w')
 
 eq_data = json.load(infile)
@@ -21,6 +23,15 @@ for eq in list_of_eqs:
     lons.append(lon)
     lats.append(lat)
 
-print(mags)
-print(lons)
-print(lats)
+print(mags[:5])
+print(lons[:5])
+print(lats[:5])
+
+
+data = [Scattergeo(lon=lons, lat=lats)]
+
+my_layout = Layout(title='Global Earthquake 1 Day')
+
+fig = {'data': data, 'layout': my_layout}
+
+offline.plot(fig, filename='globalearthquake1day.html')
